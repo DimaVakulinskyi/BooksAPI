@@ -8,6 +8,6 @@
 
 "categories_text" = "Categories";
 "publisher_text" = "Publisher: %@";
-"rank_text" = "Rank: %@";
+//"rank_text" = "Rank: %@";
 "amazon_link_text" = "Amazon Link";
 "close_button" = "Close";

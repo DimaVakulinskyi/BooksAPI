@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D5ACB282A5472770079704B /* BooksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5ACB272A5472770079704B /* BooksModel.swift */; };
+		3D5ACB2B2A5474D70079704B /* BookEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5ACB292A5474D70079704B /* BookEntity+CoreDataClass.swift */; };
+		3D5ACB2C2A5474D70079704B /* BookEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5ACB2A2A5474D70079704B /* BookEntity+CoreDataProperties.swift */; };
 		3D7FBBD12A52E47100C11468 /* BooksAPIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7FBBD02A52E47100C11468 /* BooksAPIApp.swift */; };
 		3D7FBBD32A52E47100C11468 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7FBBD22A52E47100C11468 /* ContentView.swift */; };
 		3D7FBBD52A52E47100C11468 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D7FBBD42A52E47100C11468 /* Assets.xcassets */; };
 		3D7FBBD82A52E47100C11468 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D7FBBD72A52E47100C11468 /* Preview Assets.xcassets */; };
-		3D7FBBDF2A52E4B700C11468 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7FBBDE2A52E4B700C11468 /* Model.swift */; };
+		3D7FBBDF2A52E4B700C11468 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7FBBDE2A52E4B700C11468 /* CategoryModel.swift */; };
 		3D7FBBE12A52E60200C11468 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7FBBE02A52E60200C11468 /* ViewModel.swift */; };
 		3D7FBBE42A52E68800C11468 /* CoreDataModel.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 3D7FBBE22A52E68800C11468 /* CoreDataModel.xcdatamodeld */; };
 		3D7FBBEB2A52F0DF00C11468 /* CategoryEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7FBBE92A52F0DF00C11468 /* CategoryEntity+CoreDataClass.swift */; };
@@ -21,12 +24,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D5ACB272A5472770079704B /* BooksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksModel.swift; sourceTree = "<group>"; };
+		3D5ACB292A5474D70079704B /* BookEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3D5ACB2A2A5474D70079704B /* BookEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3D7FBBCD2A52E47100C11468 /* BooksAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooksAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D7FBBD02A52E47100C11468 /* BooksAPIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksAPIApp.swift; sourceTree = "<group>"; };
 		3D7FBBD22A52E47100C11468 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3D7FBBD42A52E47100C11468 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D7FBBD72A52E47100C11468 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		3D7FBBDE2A52E4B700C11468 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		3D7FBBDE2A52E4B700C11468 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		3D7FBBE02A52E60200C11468 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		3D7FBBE32A52E68800C11468 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		3D7FBBE92A52F0DF00C11468 /* CategoryEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CategoryEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -87,7 +93,8 @@
 		3DDF0AC92A530ED90088FE82 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				3D7FBBDE2A52E4B700C11468 /* Model.swift */,
+				3D7FBBDE2A52E4B700C11468 /* CategoryModel.swift */,
+				3D5ACB272A5472770079704B /* BooksModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -105,6 +112,8 @@
 		3DDF0ACB2A530EF70088FE82 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				3D5ACB292A5474D70079704B /* BookEntity+CoreDataClass.swift */,
+				3D5ACB2A2A5474D70079704B /* BookEntity+CoreDataProperties.swift */,
 				3D7FBBEA2A52F0DF00C11468 /* CategoryEntity+CoreDataProperties.swift */,
 				3D7FBBE92A52F0DF00C11468 /* CategoryEntity+CoreDataClass.swift */,
 				3D7FBBE22A52E68800C11468 /* CoreDataModel.xcdatamodeld */,
@@ -185,10 +194,13 @@
 			files = (
 				3D7FBBEB2A52F0DF00C11468 /* CategoryEntity+CoreDataClass.swift in Sources */,
 				3D7FBBEC2A52F0DF00C11468 /* CategoryEntity+CoreDataProperties.swift in Sources */,
-				3D7FBBDF2A52E4B700C11468 /* Model.swift in Sources */,
+				3D7FBBDF2A52E4B700C11468 /* CategoryModel.swift in Sources */,
+				3D5ACB2B2A5474D70079704B /* BookEntity+CoreDataClass.swift in Sources */,
 				3D7FBBD32A52E47100C11468 /* ContentView.swift in Sources */,
+				3D5ACB2C2A5474D70079704B /* BookEntity+CoreDataProperties.swift in Sources */,
 				3D7FBBE12A52E60200C11468 /* ViewModel.swift in Sources */,
 				3D7FBBD12A52E47100C11468 /* BooksAPIApp.swift in Sources */,
+				3D5ACB282A5472770079704B /* BooksModel.swift in Sources */,
 				3DDF0AC62A530D960088FE82 /* ViewModel + Core Data.swift in Sources */,
 				3DDF0AC82A530DE40088FE82 /* ViewModel + Networking.swift in Sources */,
 			);

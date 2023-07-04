@@ -20,29 +20,8 @@ struct ContentView: View {
             .onAppear {
                 viewModel.loadCategoriesFromCoreData()
             }
-            .navigationTitle("Categories")
+            .navigationTitle(Text(LocalizedStringKey("categories_text")))
         }
-    }
-}
-
-struct BooksView: View {
-    @ObservedObject var viewModel: ViewModel
-    let category: Category
-
-    var body: some View {
-        List(viewModel.categoryBooks[category.listNameEncoded] ?? [], id: \.rank) { book in
-            VStack(alignment: .leading) {
-                Text(book.title)
-                    .font(.headline)
-                Text(book.author)
-                    .font(.subheadline)
-            }
-        }
-        .onAppear {
-            viewModel.selectedCategory = category
-            viewModel.fetchBooksIfNeeded()
-        }
-        .navigationTitle(category.listName)
     }
 }
 

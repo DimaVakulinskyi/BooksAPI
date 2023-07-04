@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  BooksAPI
+
+  Created by Дмитро Вакулінський on 05.07.2023.
+  
+*/
+
+"categories_text" = "Categories";
+"publisher_text" = "Publisher: %@";
+"rank_text" = "Rank: %@";
+"amazon_link_text" = "Amazon Link";
+"close_button" = "Close";

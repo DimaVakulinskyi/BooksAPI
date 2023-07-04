@@ -35,6 +35,9 @@ struct Book: Codable {
     let author: String
     let publisher: String
     let bookImage: String
+    let bookDescription: String
+    let amazonProductURL: String
+    var imageData: Data?
     
     private enum CodingKeys: String, CodingKey {
         case rank
@@ -42,5 +45,7 @@ struct Book: Codable {
         case author
         case publisher
         case bookImage = "book_image"
+        case bookDescription = "description"
+        case amazonProductURL = "amazon_product_url"
     }
 }

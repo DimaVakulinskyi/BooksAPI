@@ -3,7 +3,7 @@
 //  BooksAPI
 //
 //  Created by Дмитро Вакулінський on 03.07.2023.
-//
+// YEYTgOtQHNwUYXxESD0BclfGDwqLmCe9
 
 import Foundation
 import Combine
@@ -16,22 +16,23 @@ class ViewModel: ObservableObject {
     @Published var books: [Book] = []
     @Published var categoryBooks: [String: [Book]] = [:]
     
+    // MARK: - Private variables
+    
     private var cancellables = Set<AnyCancellable>()
     private var networkMonitor: NWPathMonitor?
+    private var viewContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
     
     private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "CoreDataModel")
         container.loadPersistentStores { (_, error) in
             if let error = error {
-                fatalError("Failed to load Core Data stack: \(error)")
+                fatalError(error.localizedDescription)
             }
         }
         return container
     }()
-    
-    private var viewContext: NSManagedObjectContext {
-        return persistentContainer.viewContext
-    }
     
     init() {
         loadCategoriesFromCoreData()
@@ -52,15 +53,38 @@ class ViewModel: ObservableObject {
                 }
             }
         } catch {
-            print("Failed to load categories from Core Data: \(error)")
+            print(error.localizedDescription)
         }
     }
     
     func fetchBooksIfNeeded() {
-        
         if let category = selectedCategory, categoryBooks[category.listNameEncoded] == nil {
             fetchBooksForSelectedCategory()
         }
+    }
+    
+    func fetchImage(for book: Book, completion: @escaping (Data?) -> Void) {
+        guard let imageURL = URL(string: book.bookImage) else {
+            completion(nil)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: imageURL) { data, _, error in
+            if let error = error {
+                print(error.localizedDescription)
+                completion(nil)
+                return
+            }
+            
+            completion(data)
+        }.resume()
+    }
+    
+    // MARK: - Private methods
+    
+    private func fetchCategoriesIfNeeded() {
+        guard categories.isEmpty else { return }
+        fetchCategories()
     }
     
     private func startMonitoringNetwork() {
@@ -77,11 +101,6 @@ class ViewModel: ObservableObject {
                 }
             }
         }
-    }
-    
-    private func fetchCategoriesIfNeeded() {
-        guard categories.isEmpty else { return }
-        fetchCategories()
     }
     
     private func fetchCategories() {
@@ -135,8 +154,6 @@ class ViewModel: ObservableObject {
         }
     }
     
-    // "https://api.nytimes.com/svc/books/v3/lists/current/\(category.listNameEncoded).json?api-key=YEYTgOtQHNwUYXxESD0BclfGDwqLmCe9"
-    
     func fetchBooksForSelectedCategory() {
         guard let category = selectedCategory else { return }
         
@@ -162,42 +179,16 @@ class ViewModel: ObservableObject {
                     print(error.localizedDescription)
                 }
             } receiveValue: { [weak self] books in
-                self?.categoryBooks[category.listNameEncoded] = books // Save books to the dictionary using the category key
-                self?.saveBooksToCoreData(books, forCategory: category) // Save books to Core Data for the specific category
+                self?.categoryBooks[category.listNameEncoded] = books
+                self?.saveBooksToCoreData(books, forCategory: category)
+                self?.loadBooksFromCoreData()
             }
             .store(in: &cancellables)
     }
-    
-    
-    private func loadBooksFromCoreData() {
-        guard let category = selectedCategory else { return }
-        
-        let fetchRequest: NSFetchRequest<BookEntity> = BookEntity.fetchRequest()
-        
-        // Predicate to filter books by category listNameEncoded
-        let predicate = NSPredicate(format: "categoryListNameEncoded == %@", category.listNameEncoded)
-        fetchRequest.predicate = predicate
-        
-        do {
-            let books = try viewContext.fetch(fetchRequest)
-            self.books = books.compactMap { bookEntity in
-                guard let title = bookEntity.title,
-                      let author = bookEntity.author,
-                      let publisher = bookEntity.publisher else {
-                    return nil
-                }
-                let bookImage = bookEntity.bookImage ?? "" // Use an empty string if bookImage is nil
-                return Book(rank: Int(bookEntity.rank), title: title, author: author, publisher: publisher, bookImage: bookImage)
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    
+
     private func saveBooksToCoreData(_ books: [Book], forCategory category: Category) {
         let fetchRequest: NSFetchRequest<BookEntity> = BookEntity.fetchRequest()
         
-        // Predicate to filter books by category listNameEncoded
         let predicate = NSPredicate(format: "categoryListNameEncoded == %@", category.listNameEncoded)
         fetchRequest.predicate = predicate
         
@@ -215,6 +206,8 @@ class ViewModel: ObservableObject {
                 book.publisher = bookData.publisher
                 book.bookImage = bookData.bookImage
                 book.rank = Int32(bookData.rank)
+                book.bookDescription = bookData.bookDescription
+                book.amazonProductURL = bookData.amazonProductURL
                 book.categoryListNameEncoded = category.listNameEncoded
             }
             
@@ -223,5 +216,30 @@ class ViewModel: ObservableObject {
             print(error.localizedDescription)
         }
     }
-    
+
+    private func loadBooksFromCoreData() {
+        guard let category = selectedCategory else { return }
+        
+        let fetchRequest: NSFetchRequest<BookEntity> = BookEntity.fetchRequest()
+        
+        let predicate = NSPredicate(format: "categoryListNameEncoded == %@", category.listNameEncoded)
+        fetchRequest.predicate = predicate
+        
+        do {
+            let books = try viewContext.fetch(fetchRequest)
+            self.books = books.compactMap { bookEntity in
+                guard let title = bookEntity.title,
+                      let author = bookEntity.author,
+                      let publisher = bookEntity.publisher else {
+                    return nil
+                }
+                let bookImage = bookEntity.bookImage ?? ""
+                let bookDescription = bookEntity.bookDescription ?? "" 
+                let amazonProductURL = bookEntity.amazonProductURL ?? "" 
+                return Book(rank: Int(bookEntity.rank), title: title, author: author, publisher: publisher, bookImage: bookImage, bookDescription: bookDescription, amazonProductURL: amazonProductURL)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
